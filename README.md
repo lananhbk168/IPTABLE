@@ -17,8 +17,8 @@
 ```
 Thông qua tập tin /etc/nologin, ta có thể ngăn chặn việc login của user trong hệ thống trừ user root.
 
-Thư mục /etc/security/  cho phép người quản trị có thể giới hạn user CPU time, kích thước tối đa của file, số kết nối vào hệ thống(file /etc/security/limits.conf).
-/etc/security/access.conf để giới hạn việc login của user và nhóm từ 1 vị trí cụ thể nào đó.
+- Thư mục /etc/security/  cho phép người quản trị có thể giới hạn user CPU time, kích thước tối đa của file, số kết nối vào hệ thống(file /etc/security/limits.conf).
+- Thư mục /etc/security/access.conf để giới hạn việc login của user và nhóm từ 1 vị trí cụ thể nào đó.
 ```
 - Tham khảo về cú pháp của file /etc/security/limits.conf
 ```
@@ -63,6 +63,7 @@ Linux kernel cho phép thực thi chức năng packet filtering trong hệ thố
 - Cung cấp chi tiết các tuỳ chọn để ghi nhận sự kiện hệ thống.
 - Cung cấp kỹ thuật NAT
 - Có khả năng ngăn chặn một số cơ chế tấn công theo kiểu từ chối dịch vụ(denial of service (DoS) attacks)
+
 #### 3. Kiến trúc   của Iptables:
 
 - IPTables được chia làm 4 bảng (table): bảng filter dùng để lọc gói dữ liệu, bảng nat dùng để thao tác với các gói dữ liệu được NAT nguồn hay NAT đích, bảng mangle dùng để thay đổi các thông số trong gói IP và bảng conntrack dùng để theo dõi các kết nối. Mỗi table gồm nhiều mắc xích (chain).Chain gồm nhiều luật (rule) để thao tác với các gói dữ liệu. Rule có thể là ACCEPT (chấp nhận gói dữ liệu), DROP (thả gói), REJECT (loại bỏ gói) hoặc tham chiếu (reference) đến một chain khác. Ta sẽ đi sau vào tìm hiểu từng bảng một trong IPTables
