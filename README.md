@@ -79,7 +79,28 @@ Linux kernel cho phép thực thi chức năng packet filtering trong hệ thố
  - Output chain: Lọc packets đi ra firewall.
  
 #### NAT queue:
-Thực thi chức năng NAT, cung cấp hai loại build-in chains sau đây:
+- Thực thi chức năng NAT
+- Cơ chế NAT :
 
- - Pre-routing chain: NATs packets khi destination address của packet cần thay đổi (NAT từ ngoài vào trong nội bộ).
- - Post-routing chain: NATs packets khi source address của packet cần thay đổi(NAT từ trong ra ngoài)
+ -	Khi một máy bên trong mạng nội bộ truy cập vào tài nguyên bên ngoài thì packet được gửi đến IPNAT, IPNAT sẽ thay đổi địa chỉ nguồn của packet bằng một địa chỉ hợp lệ trong dãy địa chỉ được cấp trên internet nếu còn.
+
+ -	Khi một máy của mạng bên ngoài truy cập vào tài nguyên của mạng cục bộ qua IP NAT, khi packet đến IP NAT nó sẽ thay đổi địa chỉ đích của packet bằng một địa chỉ của mạng cục bộ
+	
+-	Để chuyển đổi trường địa chỉ nguồn hoặc đích trong packet chúng ta sử dụng 3 chuỗi luật được xây dựng sẵn:
+ -	Chuỗi luật PREOTING: dùng để chuyển đổi địa chỉ các gói tin ngay sau khi đi vào firewall.
+ -	Chuỗi luật POSOUTPUT: dùng để thay đổi địa chỉ gói tin trước khi chúng ra khỏi firewall.
+ -	Chuỗi luật OUTPUT: dùng để thay đổi địa chỉ các gói tin được phát sinh cục bộ (trên firewall) trước khi định tuyến.
+
+#### 4. Cơ chế xử lý gói tin :
+ 
+ Việc kiểm tra gói tin được thực hiện bởi IPTables bằng cách dùng các bảng tuần tự xây dựng sẵn (queue) được trình bày ở trên
+ Hình dưới đây sẽ mô tả quá trìnhxử lí gói tin:
+ 
+                        <img src ="http://i.imgur.com/zBwxKOy.png">
+                        
+- Đầu tiên gói dữ liệu đi đến mạng A, tiếp đó nó được kiểm tra bởi Mangle Tables PREROUTING chain nếu cần. Tiếp theo là kiểm tra gói dữ liệu bởi Nat Tables PREROUTING chain để kiểm tra xem gói dữ liệu có cần NAT hay không, nếu có sẽ tiến hành NAT. Rồi gói dữ liệu được dẫn đi.
+Nếu gói dữ liệu được bảo về thì nó sẽ được lọc bởi FORWARD chain của Filter Table, nếu cần gói dữ liệu sẽ được NAT trong POSTROUTING chain để vào mạng B.
+Nếu gói dữ liệu được đưa vào firewall, nó sẽ được kiểm tra vởi INPUT chain trong managle table, nếu qua được phần này nó sẽ vào trong các chương trình của server bên trong firewall.
+Khi firewall cần gửi dữ liệu ra ngoài.Gói dữ liệu sẽ đi qua OUTPUT chain trong Mangle Table. Gói tin sẽ được NAT nếu cần thiết và kiểm tra NAT and QoS trong POSTROUTING chain. Sau đó dữ liệu được đưa trở lại Internet.
+
+#### 5.
