@@ -148,3 +148,47 @@ match = -m matchname [per-match-options]
 
 target = -j targetname [per-target-options]   
 ```
+
+- Option :
+```
+   -L : Liệt kê các cây hình thiết lập cho iptables (danh sách các rule)
+
+   -i: interface input.
+
+   -o: interface output.
+
+   -A: thêm  1 rule.
+
+   -D: xóa 1 rule.
+
+   -p: Lựa chọn giao thức.
+
+   --icmp--type :xác định rõ loại giao thức.
+
+   -J : chuyển đến mục tiêu.
+
+   -s : địa chỉ gói tin nguồn.
+
+   -d: địa chỉ gói tin đích.
+
+   -t : chọn bảng (mặc định là bảng filter).
+
+   -I : chèn thêm rule.
+
+   -R : Thay thế rule.
+
+   ...
+```
+#### 6.Ví dụ :
+ 
+ -  Đặt chính sách cho INPUT là DROP
+``` 
+  iptables  -P INPUT DROP 
+```
+ - Chặn tất cả các gói tin đi vào chạy giao thức TCP :
+```
+   iptables  -A INPUT -p tcp -j DROP
+```
+
+### III.Tài liệu tham khảo:
+ <a href ="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04</a>
