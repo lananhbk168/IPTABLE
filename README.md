@@ -1,10 +1,10 @@
 # LAB IPTABLE:
 
 ### I. Mô hình :
- <img src="http://i.imgur.com/hJwmeHe.png">
- 
- 
-### II. 
+ <img src="http://i.imgur.com/nJW2MTZ.png">
+### II. THÔNG TIN THIẾT BỊ
+ <img src="http://i.imgur.com/eWr8Cy2.png">
+### III. 
 - Cấu hình cho phép lắng nghe các gói tin đi qua :
 ```
 echo 1 > /proc/sys/net/ipv4/ip_forward
