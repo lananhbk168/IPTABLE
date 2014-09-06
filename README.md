@@ -148,21 +148,3 @@ match = -m matchname [per-match-options]
 
 target = -j targetname [per-target-options]   
 ```
-
-- Option :
-```
-   -L : Liệt kê các cây hình thiết lập cho iptables (danh sách các rule)
-   -i: interface input
-   -o: interface output
-   -A: add 1 rule
-   -D: delele 1 rule
-   -p: Lựa chọn giao thức
-   --icmp--type :xác định rõ loại giao thức
-   -J : chuyển đến mục tiêu
-   -s : địa chỉ gói tin nguồn
-   -d: địa chỉ gói tin đích
-   -t : chọn bảng (mặc định là bảng filter)
-   ...
-```
-
-
