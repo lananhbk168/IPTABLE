@@ -68,17 +68,17 @@ Linux kernel cho phép thực thi chức năng packet filtering trong hệ thố
 
 - IPTables được chia làm 4 bảng (table): bảng filter dùng để lọc gói dữ liệu, bảng nat dùng để thao tác với các gói dữ liệu được NAT nguồn hay NAT đích, bảng mangle dùng để thay đổi các thông số trong gói IP và bảng conntrack dùng để theo dõi các kết nối. Mỗi table gồm nhiều mắc xích (chain).Chain gồm nhiều luật (rule) để thao tác với các gói dữ liệu. Rule có thể là ACCEPT (chấp nhận gói dữ liệu), DROP (thả gói), REJECT (loại bỏ gói) hoặc tham chiếu (reference) đến một chain khác. Ta sẽ đi sau vào tìm hiểu từng bảng một trong IPTables
 
-#### Mangle table: 
+#### 3.1 Mangle table: 
 - Chịu trách nhiệm biến  đổi quality of service bits trong TCP header. Thông thường loại table này được ứng dụng trong SOHO.
 
-#### Filter queue
+#### 3.2 Filter queue
 - Chịu trách nhiệm thiết lập bộ lọc packet(packet filtering), có ba loại builtin chains được mô tả để thực hiện các chính sách về firewall (firewall policy rules).
 
  - Forward chain: Lọc packets đi qua firewall.
  - Input chain: Lọc  packets đi vào firewall.
  - Output chain: Lọc packets đi ra firewall.
  
-#### NAT queue:
+#### 3.3 NAT queue:
 - Thực thi chức năng NAT
 - Cơ chế NAT :
 
@@ -90,17 +90,37 @@ Linux kernel cho phép thực thi chức năng packet filtering trong hệ thố
  -	Chuỗi luật PREOTING: dùng để chuyển đổi địa chỉ các gói tin ngay sau khi đi vào firewall.
  -	Chuỗi luật POSOUTPUT: dùng để thay đổi địa chỉ gói tin trước khi chúng ra khỏi firewall.
  -	Chuỗi luật OUTPUT: dùng để thay đổi địa chỉ các gói tin được phát sinh cục bộ (trên firewall) trước khi định tuyến.
+ 
+#### 3.4 Targets và Jumps
+
+- Targets là cơ chế hoạt động trong iptables dùng để nhận diện và kiểm tra packet.
+
+- Jump là cơ chế chuyển một packet đến một target nào đó để xử lý thêm một số thao tác khác. Danh sách các target được xây dựng sẳn trong iptables:
+```
+   ACCEPT: iptables chấp nhận chuyển data đến đích.
+   DROP:  Iptables block packet.
+   LOG Thông tin của packet sẽ gởi vào syslog daemon iptables tiếp tục xử lý luật tiếp theo trong bảng mô tả luật. Nếu    luật cuối cùng không match thì sẽ drop packet.
+   REJECT Ngăn chặn packet và gởi thông báo cho sender.
+   DNAT  Thay  đổi  địa chỉ  đích của packet (rewriting the destination IP address of the packet)
+   SNAT  Thay đổi địa chỉ nguồn của packet
+   MASQUERADE Được sử dụng  để thực hiện kỹ thuật NAT ( giả mạo địa chỉ nguồnvới địa chỉ của firewall’s interface)
+```
 
 #### 4. Cơ chế xử lý gói tin :
  
  Việc kiểm tra gói tin được thực hiện bởi IPTables bằng cách dùng các bảng tuần tự xây dựng sẵn (queue) được trình bày ở trên
  Hình dưới đây sẽ mô tả quá trìnhxử lí gói tin:
  
-                        <img src ="http://i.imgur.com/zBwxKOy.png">
+ <img src ="http://i.imgur.com/zBwxKOy.png">
                         
 - Đầu tiên gói dữ liệu đi đến mạng A, tiếp đó nó được kiểm tra bởi Mangle Tables PREROUTING chain nếu cần. Tiếp theo là kiểm tra gói dữ liệu bởi Nat Tables PREROUTING chain để kiểm tra xem gói dữ liệu có cần NAT hay không, nếu có sẽ tiến hành NAT. Rồi gói dữ liệu được dẫn đi.
 Nếu gói dữ liệu được bảo về thì nó sẽ được lọc bởi FORWARD chain của Filter Table, nếu cần gói dữ liệu sẽ được NAT trong POSTROUTING chain để vào mạng B.
 Nếu gói dữ liệu được đưa vào firewall, nó sẽ được kiểm tra vởi INPUT chain trong managle table, nếu qua được phần này nó sẽ vào trong các chương trình của server bên trong firewall.
 Khi firewall cần gửi dữ liệu ra ngoài.Gói dữ liệu sẽ đi qua OUTPUT chain trong Mangle Table. Gói tin sẽ được NAT nếu cần thiết và kiểm tra NAT and QoS trong POSTROUTING chain. Sau đó dữ liệu được đưa trở lại Internet.
 
-#### 5.
+#### 5.Sử dụng Iptables
+
+- Cú pháp sử dụng :
+```
+ 
+```
