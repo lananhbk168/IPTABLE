@@ -1,7 +1,7 @@
 # LAB IPTABLE:
 
 ### I. Mô hình :
- <img src="http://i.imgur.com/ibgXYml.png">
+ <img src="http://i.imgur.com/hJwmeHe.png">
  
  
 ### II. 
