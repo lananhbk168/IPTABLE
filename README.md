@@ -13,7 +13,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 - Cấm host 10.10.10.100 sử dụng SSH từ xa vào mạng 10.10.10.0/24:
 ```
- iptables -A INPUT -p tcp -m state --state NEW -m tcp -s 10.10.10.100  -d 10.10.10.0/24 --dport 22 -j ACCEPT
+ iptables -A INPUT -p tcp -m state --state NEW -m tcp -s 10.10.10.100  -d 10.10.10.0/24 --dport 22 -j DROP
 ```
 - Cấu hình SNAT cho các host trong mạng 10.10.10.0/24 đi ra được Internet:
 ```
