@@ -3,7 +3,7 @@
    - [I. FIREWALL TRONG LINUX](#user-content-i-firewall-trong-linux)
 	- [1. Hệ thống trong firewall linux:](#user-content-1-h%E1%BB%87-th%E1%BB%91ng-trong-firewall-linux)
 	   - [1.1 Log File](#user-content-11-log-file)
-   - [II. IPTABLE](#user-content-ii-iptable)
+  - [II. IPTABLE](#user-content-ii-iptable)
 	- [1. Iptables :](#user-content-1-iptables-)
 	- [2. Tính năng của Iptables:](#user-content-2-t%C3%ADnh-n%C4%83ng-c%E1%BB%A7a-iptables)
 	- [3. Kiến trúc   của Iptables:](#user-content-3-ki%E1%BA%BFn-tr%C3%BAc---c%E1%BB%A7a-iptables)
@@ -14,7 +14,7 @@
 	- [4. Cơ chế xử lý gói tin :](#user-content-4-c%C6%A1-ch%E1%BA%BF-x%E1%BB%AD-l%C3%BD-g%C3%B3i-tin-)
 	- [5.Sử dụng Iptables](#user-content-5s%E1%BB%AD-d%E1%BB%A5ng-iptables)
 	- [6.Ví dụ :](#user-content-6v%C3%AD-d%E1%BB%A5-)
-  - [III.Tài liệu tham khảo:](#user-content-iiit%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o)
+ - [III.Tài liệu tham khảo:](#user-content-iiit%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o)
 
  
  
@@ -201,7 +201,7 @@ target = -j targetname [per-target-options]
 ```
 #### 6.Ví dụ :
  
- -  Đặt chính sách cho INPUT là DROP
+ -  Đặt chính sách cho dữ liệu vào  là DROP
 ``` 
   iptables  -P INPUT DROP 
 ```
@@ -209,6 +209,9 @@ target = -j targetname [per-target-options]
 ```
    iptables  -A INPUT -p tcp -j DROP
 ```
-
+- Cấm host 10.10.10.100/24 truy cập từ xa vào tất cả các máy trong mạng 10.10.10.0/24 :
+```
+  iptables -A INPUT -p tcp -m state --state NEW -m tcp -s 10.10.10.100  -d 10.10.10.0/24 --dport 22 -j DROP
+```
 ### III.Tài liệu tham khảo:
  <a href ="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04</a>
